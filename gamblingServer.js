@@ -15,8 +15,6 @@ function handleRequest(request, response)
 		var to = db.getData('/range/toNumber');
 		var offset = parseFloat(parseInt(from));
 		var multiplier = parseFloat((parseInt(to) - parseInt(from) + 1).toString());
-
-		//return Math.floor(Math.random() * 10.0).toString();
 		return Math.floor(offset + Math.random() * multiplier).toString();
 	}
 
@@ -27,8 +25,13 @@ function handleRequest(request, response)
 	response.setHeader('Access-Control-Allow-Headers', '*');
 	// treat response as a plain text
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	// finally generate random number from 0 to 9	
-    response.end(generateRandomNumber());
+	// finally generate random number from 0 to 9
+	if (request.url === '/range/from')
+		response.end(db.getData('/range/fromNumber');
+	else if (request.url === '/range/to')
+		response.end(db.getData('/range/toNumber'));
+	else
+    	response.end(generateRandomNumber());
 }
 
 
