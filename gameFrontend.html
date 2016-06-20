@@ -32,14 +32,31 @@
 				httpGetAsync('https://slots-3-iterative-prototype-stv909.c9users.io/', onResult);
 			}
 
+			var rangeFrom = '0';
+			var rangeTo = '0';
+
 			function onLoad()
 			{
-				document.getElementById('getButton').disabled = false;
+				function onResultFrom(fromNumber)
+				{
+					rangeFrom = fromNumber;
+					httpGetAsync('https://slots-3-iterative-prototype-stv909.c9users.io/range/to', onResultTo);
+				}
+
+				function onResultTo(toNumber)
+				{
+					rangeTo = toNumber;
+					document.getElementById('rangeFrom').innerHTML = rangeFrom;
+					document.getElementById('rangeTo').innerHTML = rangeTo;
+					document.getElementById('getButton').disabled = false;
+				}
+
+				httpGetAsync('https://slots-3-iterative-prototype-stv909.c9users.io/range/from', onResultFrom);
 			}
 		</script>
 	</head>
 	<body onload="onLoad();">
-		Guess the number from 0 to 9:
+		Guess the number from <span id="rangeFrom"></span> to <span id="rangeTo"></span>:
 		<input id="guessNumber" type="text"></input>
 		<button id="getButton" onclick="onGetClick();" disabled>Get the right number!</button>
 		<span id="resultNumber"></span>
