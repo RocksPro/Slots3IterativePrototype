@@ -25,9 +25,8 @@ function handleRequest(request, response)
 	response.setHeader('Access-Control-Allow-Headers', '*');
 	// treat response as a plain text
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	// finally generate random number from 0 to 9
 	if (request.url === '/range/from')
-		response.end(db.getData('/range/fromNumber');
+		response.end(db.getData('/range/fromNumber'));
 	else if (request.url === '/range/to')
 		response.end(db.getData('/range/toNumber'));
 	else
