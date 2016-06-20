@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+			Slots 3 Business-Logic Prototype 201606200742
+		</title>
+		<script>
+			function httpGetAsync(theUrl, callback)
+			{
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.onreadystatechange = function() 
+					{ 
+						if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+							callback(xmlHttp.responseText);
+					};
+				xmlHttp.open('GET', theUrl, true); // true for asynchronous 
+				xmlHttp.send(null);
+			}
+
+			function onLoad()
+			{
+				function onResult(stringRandomNumberResult)
+				{
+					document.getElementById('resultNumber').innerHTML = stringRandomNumberResult;
+				}
+
+				httpGetAsync('https://slots-3-iterative-prototype-stv909.c9users.io/', onResult);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="resultNumber"></div>
+	</body>
+</html>
