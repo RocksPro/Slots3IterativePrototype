@@ -33,13 +33,13 @@ function handleRequest(request, response)
 		response.end(db.getData('/range/toNumber'));
 	else if (request.url.indexOf('/write/from___') === 0)
 	{
-		var newValue = request.url.split()[1];
+		var newValue = request.url.split('___')[1];
 		response.end('range.from changed from ' + db.getData('/range/fromNumber') + ' to ' + newValue);
 		db.push('/range/fromNumber', newValue);
 	}
 	else if (request.url.indexOf('/write/to___') === 0)
 	{
-		var newValue = request.url.split()[1];
+		var newValue = request.url.split('___')[1];
 		response.end('range.to changed from ' + db.getData('/range/toNumber') + ' to ' + newValue);
 		db.push('/range/toNumber', newValue);
 	}
