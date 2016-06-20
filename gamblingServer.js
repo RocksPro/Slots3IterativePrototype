@@ -7,6 +7,11 @@ var db = new jsonDB('backOfficeDB', true, true);
 db.push('/range/fromNumber', '0');
 db.push('/range/toNumber', '9');
 
+function logBackOfficeParameters()
+{
+	console.log('Number range from ' + db.getData('/range/fromNumber') + ' to ' + db.getData('/range/toNumber'));
+}
+
 function handleRequest(request, response)
 {
 	function generateRandomNumber()
@@ -36,12 +41,14 @@ function handleRequest(request, response)
 		var newValue = request.url.split('___')[1];
 		response.end('range.from changed from ' + db.getData('/range/fromNumber') + ' to ' + newValue);
 		db.push('/range/fromNumber', newValue);
+		logBackOfficeParameters();
 	}
 	else if (request.url.indexOf('/write/to___') === 0)
 	{
 		var newValue = request.url.split('___')[1];
 		response.end('range.to changed from ' + db.getData('/range/toNumber') + ' to ' + newValue);
 		db.push('/range/toNumber', newValue);
+		logBackOfficeParameters();
 	}
 	else
     	response.end('unknown request');
@@ -50,7 +57,7 @@ function handleRequest(request, response)
 
 var server = http.createServer(handleRequest);
 // debug reading from db
-console.log('Number rabge from ' + db.getData('/range/fromNumber') + ' to ' + db.getData('/range/toNumber'));
+logBackOfficeParameters();
 
 // start our server
 server.listen(
