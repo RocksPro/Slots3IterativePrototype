@@ -1,11 +1,27 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>
-			Slots 3 Business-Logic Prototype 201606200711
+			Slots 3 Business-Logic Prototype 201606200714
 		</title>
+		<script>
+			function onGetClick()
+			{
+				var stringNumberResult = Math.floor(Math.random() * 10.0).toString();
+				document.getElementById('resultNumber').innerHTML = stringNumberResult;
+				document.getElementById('resultText').innerHTML = 
+					(stringNumberResult === document.getElementById('guessNumber').value)
+						? ' - you are WINNER!!!'
+						: ' - you are loser(((';
+			}
+		</script>
 	</head>
 	<body>
-		Hello developer!
+		Guess the number from 0 to 9:
+		<input id="guessNumber" type="text"></input>
+		<button onclick="onGetClick();">Get the right number!</button>
+		<span id="resultNumber"></span>
+		<span id="resultText"></span>
 	</body>
 </html>
