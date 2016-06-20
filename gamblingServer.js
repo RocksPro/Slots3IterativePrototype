@@ -25,12 +25,26 @@ function handleRequest(request, response)
 	response.setHeader('Access-Control-Allow-Headers', '*');
 	// treat response as a plain text
 	response.writeHead(200, {"Content-Type": "text/plain"});
+	if (request.url === '/ask/randomnumber')
+		response.end(generateRandomNumber());
 	if (request.url === '/range/from')
 		response.end(db.getData('/range/fromNumber'));
 	else if (request.url === '/range/to')
 		response.end(db.getData('/range/toNumber'));
+	else if (request.url.indexOf('/write/from___') === 0)
+	{
+		var newValue = request.url.split()[1];
+		response.end('range.from changed from ' + db.getData('/range/fromNumber') + ' to ' + newValue);
+		db.push('/range/fromNumber', newValue);
+	}
+	else if (request.url.indexOf('/write/to___') === 0)
+	{
+		var newValue = request.url.split()[1];
+		response.end('range.to changed from ' + db.getData('/range/toNumber') + ' to ' + newValue);
+		db.push('/range/toNumber', newValue);
+	}
 	else
-    	response.end(generateRandomNumber());
+    	response.end('unknown request');
 }
 
 
