@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>
-			Slots 3 Business-Logic Prototype 201606200742
+			Slots 3 Business-Logic Prototype 201606200757
 		</title>
 		<script>
 			function httpGetAsync(theUrl, callback)
@@ -18,18 +18,31 @@
 				xmlHttp.send(null);
 			}
 
-			function onLoad()
+			function onGetClick()
 			{
 				function onResult(stringRandomNumberResult)
 				{
 					document.getElementById('resultNumber').innerHTML = stringRandomNumberResult;
+					document.getElementById('resultText').innerHTML = 
+						(stringRandomNumberResult === document.getElementById('guessNumber').value)
+							? ' - you are WINNER!!!'
+							: ' - you are loser(((';
 				}
 
 				httpGetAsync('https://slots-3-iterative-prototype-stv909.c9users.io/', onResult);
 			}
+
+			function onLoad()
+			{
+				document.getElementById('getButton').disabled = false;
+			}
 		</script>
 	</head>
 	<body onload="onLoad();">
-		<div id="resultNumber"></div>
+		Guess the number from 0 to 9:
+		<input id="guessNumber" type="text"></input>
+		<button id="getButton" onclick="onGetClick();" disabled>Get the right number!</button>
+		<span id="resultNumber"></span>
+		<span id="resultText"></span>
 	</body>
 </html>
