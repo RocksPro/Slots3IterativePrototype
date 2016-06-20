@@ -4,8 +4,41 @@
 		<title>
 			Slots 3 Back-Office Prototype 201606200818
 		</title>
+		<script>
+			function httpGetAsync(theUrl, callback)
+			{
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.onreadystatechange = function() 
+					{ 
+						if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+							callback(xmlHttp.responseText);
+					};
+				xmlHttp.open('GET', theUrl, true); // true for asynchronous 
+				xmlHttp.send(null);
+			}
+
+			function onSetFromClick()
+			{
+				httpGetAsync(
+					'https://slots-3-iterative-prototype-stv909.c9users.io/write/from___' + document.getElementById('rangeFromNumber').value,
+					function(response){alert(response);}
+				);
+			}
+
+			function onSetToClick()
+			{
+				httpGetAsync(
+					'https://slots-3-iterative-prototype-stv909.c9users.io/write/to___' + document.getElementById('rangeToNumber').value,
+					function(response){alert(response);}
+				);
+			}
+		</script>
 	</head>
 	<body>
-		Hello product owner!
+		Set new range parameters:
+		<br>
+		from number <input id="rangeFromNumber" type="text"></input><button onclock="onSetFromClick();">set value</button>
+		<br>
+		to number <input id="rangeToNumber" type="text"></input><button onclock="onSetFromClick();">set value</button>
 	</body>
 </html>
