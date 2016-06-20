@@ -15,7 +15,7 @@ function handleRequest(request, response)
     response.end(Math.floor(Math.random() * 10.0).toString());
 }
 
-var db = new JsonDB('backOfficeDB', true, true);
+var db = new jsonDB('backOfficeDB', true, true);
 // debug initialization for db
 db.push('/range/fromNumber', '0');
 db.push('/range/toNumber', '9');
