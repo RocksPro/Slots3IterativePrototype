@@ -1,5 +1,6 @@
+const port = 8080;
 var http = require('http');
-const port = 8080; 
+var jsonDB = require('node-json-db');
 
 function handleRequest(request, response)
 {
@@ -14,7 +15,14 @@ function handleRequest(request, response)
     response.end(Math.floor(Math.random() * 10.0).toString());
 }
 
+var db = new JsonDB('backOfficeDB', true, true);
+// debug initialization for db
+db.push('/range/fromNumber', '0');
+db.push('/range/toNumber', '9');
+
 var server = http.createServer(handleRequest);
+// debug reading from db
+console.log('Number rabge from ' + db.getData('/range/fromNumber') + ' to ' + db.getData('/range/toNumber'));
 
 // start our server
 server.listen(
