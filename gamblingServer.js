@@ -2,8 +2,24 @@ const port = 8080;
 var http = require('http');
 var jsonDB = require('node-json-db');
 
+var db = new jsonDB('backOfficeDB', true, true);
+// debug initialization for db
+db.push('/range/fromNumber', '0');
+db.push('/range/toNumber', '9');
+
 function handleRequest(request, response)
 {
+	function generateRandomNumber()
+	{
+		var from = db.getData('/range/fromNumber');
+		var to = db.getData('/range/toNumber');
+		var offset = parseFloat(parseInt(from));
+		var multiplier = parseFloat((parseInt(to) - parseInt(from) + 1).toString());
+
+		//return Math.floor(Math.random() * 10.0).toString();
+		return Math.floor(offset + Math.random() * multiplier).toString();
+	}
+
 	// set CORS headers
 	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.setHeader('Access-Control-Request-Method', '*');
@@ -12,13 +28,9 @@ function handleRequest(request, response)
 	// treat response as a plain text
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	// finally generate random number from 0 to 9	
-    response.end(Math.floor(Math.random() * 10.0).toString());
+    response.end(generateRandomNumber());
 }
 
-var db = new jsonDB('backOfficeDB', true, true);
-// debug initialization for db
-db.push('/range/fromNumber', '0');
-db.push('/range/toNumber', '9');
 
 var server = http.createServer(handleRequest);
 // debug reading from db
@@ -29,6 +41,6 @@ server.listen(
 	port, 
 	function()
 	{
-    	console.log('Server listening on: http://localhost: ' + port);
+		console.log('Server listening on: http://localhost: ' + port);
 	}
 );
